@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
- 
+import '../../Component/Bar/navigationBar.dart';
+
 class Community extends StatefulWidget {
   @override
   CommunityState createState() => new CommunityState();
@@ -8,15 +9,9 @@ class Community extends StatefulWidget {
 class CommunityState extends State<Community> {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      home: new Scaffold(
-        appBar: new AppBar(
-          title: new Text("社区"),
-        ),
-        body: new Center(
-          child: new Text('Community'),
-        ),
-      ),
+    return new NavigationBar(
+        titles: <Widget>[Text('推荐'), Text('关注')],
+        bodys: <Widget>[Text('推荐内容'), Text('关注内容'),],
     );
   }
 }

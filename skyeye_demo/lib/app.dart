@@ -10,7 +10,7 @@ class SkyEyeApp extends StatefulWidget {
  
 class SkyEyeState extends State<SkyEyeApp>
     with SingleTickerProviderStateMixin {
-  TabController controller;
+  TabController _controller;
   var tabs = [
               new Tab(
                 text: "首页",
@@ -39,21 +39,22 @@ class SkyEyeState extends State<SkyEyeApp>
             ];
   @override
   void initState() {
-    controller = new TabController(length: tabs.length, vsync: this);
+    _controller = new TabController(length: tabs.length, vsync: this);
   }
  
   @override
   void dispose() {
-    controller.dispose();
+    _controller.dispose();
     super.dispose();
   }
- 
+  
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
       home: new Scaffold(
         body: new TabBarView(
-          controller: controller,
+          physics: new NeverScrollableScrollPhysics(),
+          controller: _controller,
           children: [
             new Home(),
             new Community(),
@@ -64,7 +65,7 @@ class SkyEyeState extends State<SkyEyeApp>
         bottomNavigationBar: new Material(
           color: Colors.blue,
           child: new TabBar(
-            controller: controller,
+            controller: _controller,
             tabs: tabs
           ),
         ),

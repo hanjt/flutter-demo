@@ -1,34 +1,61 @@
 import 'package:flutter/material.dart';
 
 class NavigationBar extends StatelessWidget {
-  var titles;
-  var bodys;
+  // var titles = [Text('发现'), Text('推荐'), Text('日报')];
+  // var bodys = [Text('发现内容'), Text('推荐内容'), Text('日报内容')];
+  const NavigationBar({
+    this.titles,
+    this.bodys,
+  });
+  final List<Widget> titles;
+  final List<Widget> bodys;
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      home: new DefaultTabController(
+    return new DefaultTabController(
         length: titles.length,
         child: new Scaffold(
           appBar: new PreferredSize(
-            preferredSize: Size.fromHeight(kToolbarHeight),
+            // preferredSize: Size.fromHeight(kToolbarHeight),
+            preferredSize: new Size(MediaQuery.of(context).size.width - 64, 64),
             child: new Container(
               color: Colors.grey[100],
               child: new SafeArea(
-                child: Column(
+                child: new Row (
                   children: <Widget>[
-                    new Expanded(child: new Container()),
-                    new TabBar(
-                      indicatorColor: Colors.black,
-                      labelColor:  Colors.black,
-                      unselectedLabelColor: Colors.black26,
-                      indicatorWeight: 3.0,
-                      indicatorPadding: new EdgeInsets.only(bottom: 3.0),
-                      labelPadding: new EdgeInsets.only(bottom: 10.0),
-                      indicatorSize: TabBarIndicatorSize.label,
-                      tabs: titles,
+                    Expanded (
+                      child: Container(
+                      ),
                     ),
-                  ],
-                ),
+                    Expanded (
+                      child: Container(
+                        child: TabBar(
+                            indicatorColor: Colors.black,
+                            labelColor:  Colors.black,
+                            unselectedLabelColor: Colors.black26,
+                            indicatorWeight: 3.0,
+                            indicatorPadding: new EdgeInsets.only(top: 25.0),
+                            labelPadding: new EdgeInsets.only(top: 20.0),
+                            indicatorSize: TabBarIndicatorSize.label,
+                            tabs: titles,
+                            ),
+                      ),
+                    ),
+                    Expanded (
+                      child: Container(
+                        padding: new EdgeInsets.only(top: 20.0, left: 70.0),
+                        child: IconButton(
+                        icon: Icon(Icons.search),
+                        highlightColor: Color(0x00000000),
+                        splashColor: Color(0x00000000),
+                        disabledColor: Color(0x00000000),
+                        onPressed: () {
+                          
+                        },
+                      ),
+                      ),
+                    ),
+                    ],
+                 ),
               ),
             ),
           ),
@@ -36,8 +63,7 @@ class NavigationBar extends StatelessWidget {
             children: bodys
           ),
         ),
-      ),
-    );
+      );
   }
 }
 
