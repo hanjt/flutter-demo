@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import '../Component/cell.dart';
 import '../Detail/detail.dart';
-import '../Add/add.dart';
 import '../Model/homeResponse.dart';
 import '../Model/enumeration.dart';
 import '../Network/networl.dart';
+import '../Scan/scan.dart';
 
 class ShareBookApp extends StatefulWidget {
   @override
@@ -36,11 +36,7 @@ class ShareBookState extends State<ShareBookApp> {
                 //跳转详情页
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => 
-                      DetailController(
-                        post: fetchBookDetail('1'),
-                        title: '我是标题'
-                      )),
+                      MaterialPageRoute(builder: (context) => Scanqr()),
                     ); 
               },
             )
