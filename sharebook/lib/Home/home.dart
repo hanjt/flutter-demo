@@ -2,36 +2,22 @@ import 'package:flutter/material.dart';
 import '../Component/cell.dart';
 import '../Detail/detail.dart';
 import '../Add/add.dart';
+import '../Model/homeResponse.dart';
+import '../Model/enumeration.dart';
+import '../Network/networl.dart';
 
-class ShareBookApp extends StatelessWidget {
-  //列表中的数据结构
-  var list = ListView.separated(
-              shrinkWrap: true, 
-              itemCount: books.length,
-              separatorBuilder: (BuildContext context, int index) => new Divider(), 
-              itemBuilder: (context, index) {
-                return new InkWell(
-                  child: BookCell(
-                    title: books[index]['title'],
-                    content: books[index]['content'],
-                  ),
-                  onTap: (){
-                    //跳转详情页
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => 
-                      DetailController(
-                        title: books[index]['title'],
-                        content: books[index]['content'],
-                      )),
-                    );                 
-                  },
-                );//BookCell();
-              },
-            );
-  // This widget is the root of your application.
+class ShareBookApp extends StatefulWidget {
+  @override
+  ShareBookState createState() => new ShareBookState();
+}
+
+class ShareBookState extends State<ShareBookApp> {  
   @override
   Widget build(BuildContext context) {
+    HomeListResponse response = new HomeListResponse(
+      response: book
+    );
+    List list = response.convertToModel();
     return MaterialApp(
       title: 'Share Book',
       theme: ThemeData(
@@ -52,27 +38,44 @@ class ShareBookApp extends StatelessWidget {
                       context,
                       MaterialPageRoute(builder: (context) => 
                       DetailController(
-                        title: '我是标题',
-                        content:  '我是小冰',
+                        post: fetchBookDetail('1'),
+                        title: '我是标题'
                       )),
                     ); 
               },
             )
           ],
         ),
-        body: list,
+        body: ListView.separated(
+              shrinkWrap: true, 
+              itemCount: list.length,
+              separatorBuilder: (BuildContext context, int index) => new Divider(), 
+              itemBuilder: (context, index) {
+                return new InkWell(
+                  child: BookCell(
+                    title: list[index].title,
+                    content: list[index].content,
+                  ),
+                  onTap: (){
+                    //跳转详情页
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => 
+                      DetailController(
+                        post: fetchBookDetail(list[index].isbn),
+                        title: list[index].title
+                      )),
+                    );                 
+                  },
+                );//BookCell();
+              },
+            ),
       ),
     );
   }
 }
 
-List<Map<String, String>> books = [{'title': '我是标题', 'content': '我是内容'},
-    {'title': '我是标题', 'content': '我是内容'},
-    {'title': '我是标题', 'content': '我是内容'},
-    {'title': '我是标题', 'content': '我是内容'},
-    {'title': '我是标题', 'content': '我是内容'},
-    {'title': '我是标题', 'content': '我是内容'},
-    {'title': '我是标题', 'content': '我是内容'},
-    {'title': '我是标题', 'content': '我是内容'},
-    {'title': '我是标题', 'content': '我是内容'},
-    {'title': '我是标题', 'content': '我是内容'}];
+Map<String, dynamic> book = {'list':[
+  {'url': 'http://www.baidu.com','title': '我是标题', 'content': '我是内容', 'isbn': '9787533936020', 'type': ReadType.noRead},
+  {'url': 'http://www.baidu.com','title': '我是标题', 'content': '我是内容', 'isbn': '9787505735002', 'type': ReadType.noRead}
+   ]};

@@ -1,0 +1,4 @@
+enum ReadType {
+    read,
+    noRead
+  }
