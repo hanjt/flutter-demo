@@ -6,12 +6,21 @@ import '../Model/enumeration.dart';
 import '../Network/networl.dart';
 import '../Scan/scan.dart';
 
+import 'package:barcode_scan/barcode_scan.dart';
+import 'dart:async';
+import 'package:flutter/services.dart';
+
 class ShareBookApp extends StatefulWidget {
   @override
   ShareBookState createState() => new ShareBookState();
 }
 
 class ShareBookState extends State<ShareBookApp> {  
+
+    String barcode = "";
+
+  final navigatorKey = GlobalKey<NavigatorState>();
+
   @override
   Widget build(BuildContext context) {
     HomeListResponse response = new HomeListResponse(
@@ -27,21 +36,14 @@ class ShareBookState extends State<ShareBookApp> {
         appBar: AppBar(
           title: Text('书宝宝的窝'),
           actions: <Widget>[
-            //跳转添加页面
-            IconButton(
-              icon: Icon(
-                Icons.add
+            Builder(
+              builder: (context) => IconButton(
+                  icon: Icon(
+                  Icons.add
+                  ),
+                  onPressed: scan
               ),
-              onPressed: () {
-                //跳转详情页
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => DetailController(
-                        post: fetchBookDetail(list[0].isbn)
-                      )),
-                    ); 
-              },
-            )
+            ),
           ],
         ),
         body: ListView.separated(
@@ -69,6 +71,29 @@ class ShareBookState extends State<ShareBookApp> {
             ),
       ),
     );
+  }
+
+  Future scan() async {
+    try {
+      String barcode = await BarcodeScanner.scan();
+      setState(() {
+        return this.barcode = barcode;
+      });
+    } on PlatformException catch (e) {
+      if (e.code == BarcodeScanner.CameraAccessDenied) {
+        setState(() {
+          return this.barcode = 'The user did not grant the camera permission!';
+        });
+      } else {
+        setState(() {
+          return this.barcode = 'Unknown error: $e';
+        });
+      }
+    } on FormatException{
+      setState(() => this.barcode = 'null (User returned using the "back"-button before scanning anything. Result)');
+    } catch (e) {
+      setState(() => this.barcode = 'Unknown error: $e');
+    }
   }
 }
 
