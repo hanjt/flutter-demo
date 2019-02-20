@@ -36,6 +36,9 @@ class DetailResponse {
 
   //概述
   final String summary;
+
+  //售价
+  final String price;
   
   DetailResponse({
     this.author, 
@@ -50,6 +53,7 @@ class DetailResponse {
     this.publisher,
     this.originTitle,
     this.summary,
+    this.price,
     });
   factory DetailResponse.fromJson(Map<String, dynamic> json) {
       return DetailResponse(
@@ -65,6 +69,7 @@ class DetailResponse {
         publisher: json['publisher'],
         originTitle: json['alt_title'],
         summary: json['summary'],
+        price: json['price'],
       );
     }
 }

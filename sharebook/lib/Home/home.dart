@@ -36,7 +36,9 @@ class ShareBookState extends State<ShareBookApp> {
                 //跳转详情页
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Scanqr()),
+                      MaterialPageRoute(builder: (context) => DetailController(
+                        post: fetchBookDetail(list[0].isbn)
+                      )),
                     ); 
               },
             )
@@ -58,8 +60,7 @@ class ShareBookState extends State<ShareBookApp> {
                       context,
                       MaterialPageRoute(builder: (context) => 
                       DetailController(
-                        post: fetchBookDetail(list[index].isbn),
-                        title: list[index].title
+                        post: fetchBookDetail(list[index].isbn)
                       )),
                     );                 
                   },
