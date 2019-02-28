@@ -3,15 +3,14 @@ import '../Component/cell.dart';
 import '../Detail/detail.dart';
 import '../Model/homeResponse.dart';
 import '../Model/enumeration.dart';
-import '../Network/networl.dart';
 import '../Scan/scan.dart';
 
-class ShareBookApp extends StatefulWidget {
+class HomeController extends StatefulWidget {
   @override
-  ShareBookState createState() => new ShareBookState();
+  HomeState createState() => new HomeState();
 }
 
-class ShareBookState extends State<ShareBookApp> {  
+class HomeState extends State<HomeController> {  
   @override
   Widget build(BuildContext context) {
     HomeListResponse response = new HomeListResponse(
