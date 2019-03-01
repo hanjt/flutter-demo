@@ -11,7 +11,7 @@ class LoginController extends StatefulWidget {
 
 class LoginState extends State<LoginController> {
   final TextEditingController _mailController = new TextEditingController();
-  final TextEditingController _secretController = new TextEditingController();
+  final TextEditingController _passwordController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -74,7 +74,7 @@ class LoginState extends State<LoginController> {
                   Flexible(
                     flex: 6,
                     child: TextField(
-                      controller: _secretController,
+                      controller: _passwordController,
                       obscureText: true,//是否是密码
                       maxLength: 8,
                       decoration: InputDecoration(
@@ -97,7 +97,7 @@ class LoginState extends State<LoginController> {
                     splashColor: Color(0x000000),
                     elevation: 4.0,
                     onPressed: () {
-                      if (isMail(_mailController.text) && isSecret(_secretController.text)) {
+                      if (isMail(_mailController.text) && isPassword(_passwordController.text)) {
                         Navigator.pushReplacementNamed(context, "/login");
                       } else {
                         if (!isMail(_mailController.text)) {
@@ -124,7 +124,7 @@ class LoginState extends State<LoginController> {
                     Navigator.pushNamed(context, "/signin").then((value) {
                       Map result = value;
                         _mailController.text = result['mail'];
-                        _secretController.text = result['secret'];
+                        _passwordController.text = result['password'];
                     });
                   },
                 ),

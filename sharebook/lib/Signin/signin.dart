@@ -9,8 +9,8 @@ class SigninController extends StatefulWidget {
 
 class SigninState extends State<SigninController> {
   final TextEditingController _mailController = new TextEditingController();
-  final TextEditingController _secretController = new TextEditingController();
-  final TextEditingController _reenterSecretController = new TextEditingController();
+  final TextEditingController _passwordController = new TextEditingController();
+  final TextEditingController _reenterPasswordController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -62,7 +62,7 @@ class SigninState extends State<SigninController> {
                   Flexible(
                     flex: 6,
                     child: TextField(
-                      controller: _secretController,
+                      controller: _passwordController,
                       obscureText: true,//是否是密码
                       maxLength: 8,
                       decoration: InputDecoration(
@@ -90,7 +90,7 @@ class SigninState extends State<SigninController> {
                   Flexible(
                     flex: 6,
                     child: TextField(
-                      controller: _reenterSecretController,
+                      controller: _reenterPasswordController,
                       obscureText: true,//是否是密码
                       maxLength: 8,
                       decoration: InputDecoration(
@@ -115,12 +115,12 @@ class SigninState extends State<SigninController> {
                     onPressed: () {
                       if (!isMail(_mailController.text)) {
                         showToast("请输入正确邮箱");
-                      }  else if (!isSecret(_secretController.text)) {
+                      }  else if (!isPassword(_passwordController.text)) {
                         showToast("请输入正确密码");
-                      } else if (_secretController.text !=_reenterSecretController.text) {
+                      } else if (_passwordController.text !=_reenterPasswordController.text) {
                         showToast("两次密码输入不正确");
                       } else {
-                        Navigator.pop(context, {'mail':_mailController.text, 'secret':_secretController.text});
+                        Navigator.pop(context, {'mail':_mailController.text, 'password':_passwordController.text});
                       }
                     },
                   ),
