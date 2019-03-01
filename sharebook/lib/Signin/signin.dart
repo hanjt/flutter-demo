@@ -1,33 +1,21 @@
 import 'package:flutter/material.dart';
-import '../Home/home.dart';
 import '../Component/toast.dart';
 import '../Utility/utility.dart';
-import '../Signin/signin.dart';
 
-class LoginController extends StatefulWidget {
+class SigninController extends StatefulWidget {
   @override
-  LoginState createState() => new LoginState();
+  SigninState createState() => new SigninState();
 }
 
-class LoginState extends State<LoginController> {
+class SigninState extends State<SigninController> {
   final TextEditingController _mailController = new TextEditingController();
   final TextEditingController _secretController = new TextEditingController();
+  final TextEditingController _reenterSecretController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: '',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        platform: TargetPlatform.iOS,
-      ),
-      //跳转到指定页面，且禁用右滑返回手势
-      routes: {
-        "/login": (_) => new HomeController(),
-        "/signin": (_) => new SigninController(),
-      },
-      home: Scaffold(
+    return  Scaffold(
         appBar: AppBar(
-          title: Text('书宝宝的窝'),
+          title: Text('注册'),
         ),
         body: Column(
           children: <Widget>[
@@ -87,52 +75,60 @@ class LoginState extends State<LoginController> {
             ),
             Padding(
               padding: EdgeInsets.only(bottom: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Flexible(
+                    flex: 2,
+                    child: Container(
+                      padding: EdgeInsets.only(right: 20),
+                      child: Text(
+                        '确认输入'
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                    flex: 6,
+                    child: TextField(
+                      controller: _reenterSecretController,
+                      obscureText: true,//是否是密码
+                      maxLength: 8,
+                      decoration: InputDecoration(
+                          hintText: '密码长度8位含大小写及数字'
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: 20),
               child: ButtonTheme(
                 minWidth: 200,
                 child: Builder(
                   builder: (context) => RaisedButton(
-                    child: const Text('登录'),
+                    child: const Text('注册'),
                     color: Theme.of(context).accentColor,
                     textColor: Colors.white,
                     splashColor: Color(0x000000),
                     elevation: 4.0,
                     onPressed: () {
-                      if (isMail(_mailController.text) && isSecret(_secretController.text)) {
-                        Navigator.pushReplacementNamed(context, "/login");
+                      if (!isMail(_mailController.text)) {
+                        showToast("请输入正确邮箱");
+                      }  else if (!isSecret(_secretController.text)) {
+                        showToast("请输入正确密码");
+                      } else if (_secretController.text !=_reenterSecretController.text) {
+                        showToast("两次密码输入不正确");
                       } else {
-                        if (!isMail(_mailController.text)) {
-                          showToast("请输入正确邮箱");
-                        } else {
-                          showToast("请输入正确密码");
-                        }
+                        Navigator.pop(context, {'mail':_mailController.text, 'secret':_secretController.text});
                       }
                     },
                   ),
                 ),
               ),
             ),
-            ButtonTheme(
-              minWidth: 200,
-              child: Builder(
-                builder: (context) => RaisedButton(
-                  child: const Text('注册'),
-                  color: Theme.of(context).accentColor,
-                  textColor: Colors.white,
-                  elevation: 4.0,
-                  splashColor: Color(0x000000),
-                  onPressed: () {
-                    Navigator.pushNamed(context, "/signin").then((value) {
-                      Map result = value;
-                        _mailController.text = result['mail'];
-                        _secretController.text = result['secret'];
-                    });
-                  },
-                ),
-              ),
-            ),
           ],
         )
-      ),
     );
   }
 }

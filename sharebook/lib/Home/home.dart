@@ -21,6 +21,7 @@ class HomeState extends State<HomeController> {
       title: 'Share Book',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        platform: TargetPlatform.iOS,
       ),
       home: Scaffold(
         appBar: AppBar(
