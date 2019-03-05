@@ -22,8 +22,8 @@ dependencies:
   http: ^0.12.0+1
   fast_qr_reader_view: ^0.1.5
   barcode_scan: ^0.0.8
-  sqflite: ^1.1.0
   fluttertoast: ^3.0.1
+  shared_preferences: ^0.5.1+1
 
 dev_dependencies:
   flutter_test:
@@ -32,8 +32,8 @@ dev_dependencies:
   http: ^0.12.0+1
   fast_qr_reader_view: ^0.1.5
   barcode_scan: ^0.0.8
-  sqflite: ^1.1.0
   fluttertoast: ^3.0.1
+  shared_preferences: ^0.5.1+1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec

@@ -3,6 +3,8 @@ import '../Home/home.dart';
 import '../Component/toast.dart';
 import '../Utility/utility.dart';
 import '../Signin/signin.dart';
+import '../Network/networl.dart';
+import '../Model/loginResponse.dart';
 
 class LoginController extends StatefulWidget {
   @override
@@ -10,8 +12,10 @@ class LoginController extends StatefulWidget {
 }
 
 class LoginState extends State<LoginController> {
+  
   final TextEditingController _mailController = new TextEditingController();
   final TextEditingController _passwordController = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -98,7 +102,13 @@ class LoginState extends State<LoginController> {
                     elevation: 4.0,
                     onPressed: () {
                       if (isMail(_mailController.text) && isPassword(_passwordController.text)) {
-                        Navigator.pushReplacementNamed(context, "/login");
+                        fetchLogin(_mailController.text, _passwordController.text).then((response) {
+                          if (response.errorCode == 0) {
+                            Navigator.pushReplacementNamed(context, "/login");
+                          } else {
+                            showToast(response.errorMsg);
+                          }
+                        });
                       } else {
                         if (!isMail(_mailController.text)) {
                           showToast("请输入正确邮箱");
@@ -135,4 +145,5 @@ class LoginState extends State<LoginController> {
       ),
     );
   }
+
 }

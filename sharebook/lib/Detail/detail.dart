@@ -14,7 +14,7 @@ class DetailController extends StatelessWidget {
           title: new Text(''),
         ),
         body: BookInformation(
-        post: fetchBookDetail(this.barcode),
+          post: fetchBookDetail(this.barcode),
       ),
     );
   }  
