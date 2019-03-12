@@ -4,7 +4,6 @@ import '../Component/toast.dart';
 import '../Utility/utility.dart';
 import '../Signin/signin.dart';
 import '../Network/networl.dart';
-import '../Model/loginResponse.dart';
 
 class LoginController extends StatefulWidget {
   @override
@@ -13,9 +12,9 @@ class LoginController extends StatefulWidget {
 
 class LoginState extends State<LoginController> {
   
-  final TextEditingController _mailController = new TextEditingController();
-  final TextEditingController _passwordController = new TextEditingController();
-
+  final TextEditingController _mailController = new TextEditingController(text: '854692552@qq.com');
+  final TextEditingController _passwordController = new TextEditingController(text: '123456Aa');
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -54,7 +53,7 @@ class LoginState extends State<LoginController> {
                     child: TextField(
                       controller: _mailController,
                       decoration: InputDecoration(
-                        hintText: '请输入正确邮箱           '
+                        hintText: '请输入正确邮箱           ',
                       ),
                     ),
                   )
@@ -82,7 +81,7 @@ class LoginState extends State<LoginController> {
                       obscureText: true,//是否是密码
                       maxLength: 8,
                       decoration: InputDecoration(
-                          hintText: '密码长度8位含大小写及数字'
+                          hintText: '密码长度8位含大小写及数字',
                       ),
                     ),
                   ),

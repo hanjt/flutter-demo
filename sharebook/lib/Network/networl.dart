@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:flutter/services.dart';
 
 import 'api.dart';
 import '../Model/detailResponse.dart';
 import '../Model/baseResponse.dart';
 import '../Model/loginResponse.dart';
+import '../Component/localCacher.dart';
+import '../Model/homeResponse.dart';
 
  Map<String,String> headers = {'content-type': 'application/x-www-form-urlencoded'};
 /**  
@@ -16,13 +16,15 @@ import '../Model/loginResponse.dart';
  * 
 */
 Future<DetailResponse> fetchBookDetail(String isbn) async {
-  var url = DoubanAPI.host+DoubanAPI.detail+isbn;
-  final response = await http.get('$url');
+  final response = await http.get(DoubanAPI.host+DoubanAPI.detail+isbn);
 
   if (response.statusCode == 200) {
     return DetailResponse.fromJson(json.decode(response.body));
   } else {
-    throw Exception('Failed to load post');
+    return DetailResponse(
+        errorCode: -1,
+        errorMsg: response.reasonPhrase
+    );
   }
 }
 
@@ -54,13 +56,13 @@ Future<LoginResponse> fetchLogin(String mail, String password) async {
   var body = {"mail": mail,  "password": password};
   final response = await http.post(Uri.parse(url), headers: headers, body: body);
   if (response.statusCode == 200) {
-    print(response.body);
-    print(json.decode(response.body));
-    return LoginResponse.fromJson(json.decode(response.body));
+    LoginResponse result = LoginResponse.fromJson(json.decode(response.body));
+    saveUid(result.uid);
+    return result;
   } else {
     return LoginResponse(
       errorCode: -1,
-      errorMsg: '登录失败',
+      errorMsg: response.reasonPhrase,
       uid: ''
     );
   }
@@ -71,3 +73,17 @@ Future<LoginResponse> fetchLogin(String mail, String password) async {
  * 获取图书列表
  * 
  */
+Future<HomeListResponse> fetchBookList() async {
+  var url = API.host+API.list;
+  var uid = await findUid();
+  final response = await http.get(url, headers: {'uid':uid});
+  if (response.statusCode == 200) {
+    return HomeListResponse.fromJson(json.decode(response.body));
+  } else {
+    return HomeListResponse(
+      errorCode: -1,
+      errorMsg: response.reasonPhrase,
+      originList: []
+    );
+  }
+}

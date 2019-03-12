@@ -1,16 +1,25 @@
 import 'enumeration.dart';
 
 class HomeListResponse {
-  HomeListResponse({this.response});
-  final Map<String, dynamic> response;
+  final List originList;
+  final int errorCode;
+  final String errorMsg;
+  HomeListResponse({this.originList, this.errorCode, this.errorMsg});
+  
+  factory HomeListResponse.fromJson(Map<String, dynamic> json) {
+    return HomeListResponse(
+      errorCode: json['error_code'],
+      errorMsg: json['error_msg'],
+      originList: json['data']['list'],
+    );
+  }
   
   List convertToModel() {
-    var content = response['list'] as List;
     var result = List();
-    for (var item in content) {
+    for (var item in originList) {
         result.add(HomeResponse.fromJson(item));
       }
-      return result;
+    return result;
   }
 }
 
@@ -21,8 +30,20 @@ class HomeListResponse {
   //标题
   final String title;
 
-  //内容
-  final String content;
+  //作者
+  final String author;
+
+  //出版社
+  final String publisher;
+
+  //翻译者
+  final String translator;
+
+  //出版年份
+  final String pubDate;
+
+  //装订类型
+  final String binding;
 
   //isbn
   final String isbn;
@@ -30,14 +51,18 @@ class HomeListResponse {
   //阅读状态
   final ReadType type;
 
-  HomeResponse({this.imageURL, this.title, this.content, this.isbn, this.type});
+  HomeResponse({this.imageURL, this.title, this.author, this.publisher, this.translator, this.pubDate, this.binding, this.isbn, this.type});
   factory HomeResponse.fromJson(Map<String, dynamic> json) {
       return HomeResponse(
-        imageURL: json['url'],
-        title: json['title'],
-        content: json['content'],
-        isbn: json['isbn'],
-        type: json['type'],
+        imageURL:   json['image'],
+        title:      json['title'],
+        author:     json['author'],
+        publisher:  json['publisher'],
+        translator: json['translator'],
+        pubDate:    json['pub_date'],
+        binding:    json['binding'],
+        isbn:       json['isbn'],
+        type:       json['type'],
       );
     }
   }

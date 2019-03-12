@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import '../Model/homeResponse.dart';
 
 class BookCell extends StatelessWidget {
-  final String title;
-  final String content;
-  const BookCell({this.title, this.content});
+  final HomeResponse model;
+  const BookCell({this.model});
   @override
   Widget build(BuildContext context) {
     return new Container(
@@ -13,8 +13,11 @@ class BookCell extends StatelessWidget {
             flex: 2, // 20%
             child: Container(
               padding: EdgeInsets.all(3),
-              child: Image.asset('assets/book.png'),
+              child: FadeInImage.assetNetwork(
+                    placeholder: 'assets/book.png',
+                    image: this.model.imageURL,//Image.asset('assets/book.png'),
               ),
+            ),
           ),
           Expanded(
             flex: 7, // 70%
@@ -26,7 +29,7 @@ class BookCell extends StatelessWidget {
             //出版社，作者
               children: <Widget>[
                 Text(
-                  '$title',
+                  '${this.model.title}',
                   maxLines: 1,
                   textAlign: TextAlign.left,
                   style: new TextStyle(
@@ -36,8 +39,8 @@ class BookCell extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '$content',
-                  maxLines: 1,
+                  '${this.model.author}/${this.model.publisher}/${this.model.translator}译/${this.model.pubDate}出版/${this.model.binding}',
+                  maxLines: 2,
                   textAlign: TextAlign.left,
                   style: new TextStyle(
                         fontSize: 13.0,

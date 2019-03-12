@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../Model/detailResponse.dart';
+import 'toast.dart';
 
 class BookInformation extends StatelessWidget {
   final Future<DetailResponse> post;
@@ -13,7 +14,8 @@ class BookInformation extends StatelessWidget {
                     future: this.post,
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        return new Column(
+                        if (snapshot.data.errorCode != -1) {
+                          return new Column(
                           children: <Widget>[
                             Row (
                               children: <Widget>[
@@ -101,10 +103,22 @@ class BookInformation extends StatelessWidget {
                             ),
                           ],
                         );
+                        } else {
+                          // showToast(snapshot.data.errorMsg);
+                          return Text('${snapshot.data.errorMsg}');
+                        }
                       } else if (snapshot.hasError) {
-                        return Text("${snapshot.error}");
-                      }
-                      return CircularProgressIndicator();
+                        // showToast(snapshot.error);
+                        return Text('${snapshot.error}');
+                      } 
+                      return Container(
+                        color: Colors.green.withOpacity(0.3),
+                        width: MediaQuery.of(context).size.width,//70.0,
+                        height: MediaQuery.of(context).size.height, //70.0,
+                        child: new Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: new Center(child: new CircularProgressIndicator())),
+                      );
                     },
                   ),
                 );

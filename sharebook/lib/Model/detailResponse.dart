@@ -1,6 +1,9 @@
 // import 'enumeration.dart';
 
 class DetailResponse {
+  final int errorCode;
+  final String errorMsg;
+
   //作者
   final List<dynamic> author;
   
@@ -41,6 +44,8 @@ class DetailResponse {
   final String price;
   
   DetailResponse({
+    this.errorCode,
+    this.errorMsg,
     this.author, 
     this.subTitle, 
     this.pubDate, 
