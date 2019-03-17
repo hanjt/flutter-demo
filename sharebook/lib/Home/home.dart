@@ -44,7 +44,12 @@ class HomeState extends State<HomeController> {
                                 MaterialPageRoute(builder: (context) => 
                                 ScanController()
                                 ),
-                              );  
+                              ).then((value){
+                                  Map result = value;
+                                  if (result['reloadData']) {
+                                    _post = fetchBookList();
+                                  }
+                              });  
                             }
                         ),
                       ),

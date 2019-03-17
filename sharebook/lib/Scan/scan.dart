@@ -5,6 +5,9 @@ import 'dart:async';
 
 import '../Network/networl.dart';
 import '../Component/information.dart';
+import '../Model/detailResponse.dart';
+import '../Component/toast.dart';
+
 class ScanController extends StatefulWidget {
   @override
   _ScanState createState() => new _ScanState();
@@ -13,6 +16,7 @@ class ScanController extends StatefulWidget {
 class _ScanState extends State<ScanController> {
   String _barcode = "";
 
+  BookInformation information;
   @override
   void initState() {
     super.initState();
@@ -28,7 +32,18 @@ class _ScanState extends State<ScanController> {
         actions: <Widget>[
           FlatButton (
             onPressed: () {
-
+              DetailResponse response = information.response;
+              fetchAddBook(response.title, response.author.join('，'), 
+                           response.publisher, response.translator.join('，'), 
+                           response.pubDate, response.binding,
+                            _barcode, response.imageURL).then((response) {
+                          if (response.errorCode == 0) {
+                            showToast('提交成功');
+                            Navigator.pop(context, {'reloadData': true});
+                          } else {
+                            showToast(response.errorMsg);
+                          }
+                        });
             },
             color: Colors.blue,
             splashColor: Color(0x000000),
@@ -43,9 +58,7 @@ class _ScanState extends State<ScanController> {
           ),
         ],
       ),
-      body: BookInformation(
-        post: fetchBookDetail(this._barcode),
-      ),
+      body: information,
     );
   }
 
@@ -53,6 +66,9 @@ class _ScanState extends State<ScanController> {
     try {
       String barcode = await BarcodeScanner.scan();
       setState(() {
+        information = BookInformation(
+          post: fetchBookDetail(barcode),
+        );
         return this._barcode = barcode;
       });
     } on PlatformException catch (e) {

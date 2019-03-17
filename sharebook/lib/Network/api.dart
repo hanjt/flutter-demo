@@ -5,7 +5,7 @@ class DoubanAPI {
 }
 
 class API {
-  static const host = 'http://127.0.0.1:3000';
+  static const host = 'http://192.168.199.212:3000';
 
   //注册接口
   static const signin = '/signin';

@@ -8,7 +8,7 @@ import '../Model/baseResponse.dart';
 import '../Model/loginResponse.dart';
 import '../Component/localCacher.dart';
 import '../Model/homeResponse.dart';
-
+import '../Model/enumeration.dart';
  Map<String,String> headers = {'content-type': 'application/x-www-form-urlencoded'};
 /**  
  * 
@@ -85,5 +85,30 @@ Future<HomeListResponse> fetchBookList() async {
       errorMsg: response.reasonPhrase,
       originList: []
     );
+  }
+}
+
+/** 
+ * 
+ * 添加图书
+ * 
+ */
+Future<BaseResponse> fetchAddBook(
+  String title, String author, String publisher,
+  String translator, String pubDate, String binding, String isbn, String image) async {
+  var url = API.host+API.add;
+  var body = {'title':title, 'author':author, 'publisher':publisher,
+              'translator':translator, 'pub_date':pubDate, 'binding':binding, 
+              'isbn':isbn, 'image':image};
+  var uid = await findUid();
+  final response = await http.post(url,headers: {'uid':uid}, body:body);
+
+  if (response.statusCode == 200) {
+    return BaseResponse.fromJson(json.decode(response.body));
+  } else {
+    return BaseResponse(
+      errorCode: -1,
+      errorMsg: response.reasonPhrase
+      );
   }
 }

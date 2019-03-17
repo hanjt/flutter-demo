@@ -3,8 +3,9 @@ import '../Model/detailResponse.dart';
 import 'toast.dart';
 
 class BookInformation extends StatelessWidget {
+  DetailResponse response;
   final Future<DetailResponse> post;
-  const BookInformation({this.post});  
+  BookInformation({this.post});  
   @override
   Widget build(BuildContext context) {
     return new LayoutBuilder(
@@ -15,6 +16,7 @@ class BookInformation extends StatelessWidget {
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         if (snapshot.data.errorCode != -1) {
+                          response = snapshot.data;
                           return new Column(
                           children: <Widget>[
                             Row (
@@ -47,7 +49,7 @@ class BookInformation extends StatelessWidget {
                                           ),
                                         ),
                                         Text(
-                                          '作者：${snapshot.data.author.join(',')}'
+                                          '作者：${snapshot.data.author.join('，')}'
                                         ),
                                         Text(
                                           '出版社：${snapshot.data.publisher}'
@@ -59,7 +61,7 @@ class BookInformation extends StatelessWidget {
                                           '原作名：${snapshot.data.originTitle}'
                                         ),
                                         Text(
-                                          '译者：${snapshot.data.translator.join('/')}'
+                                          '译者：${snapshot.data.translator.join('，')}'
                                         ),
                                         Text(
                                           '出版年：${snapshot.data.pubDate}'
