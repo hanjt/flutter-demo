@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Component/toast.dart';
 import '../Utility/utility.dart';
+import '../Network/networl.dart';
 
 class SigninController extends StatefulWidget {
   @override
@@ -8,9 +9,9 @@ class SigninController extends StatefulWidget {
 }
 
 class SigninState extends State<SigninController> {
-  final TextEditingController _mailController = new TextEditingController();
-  final TextEditingController _passwordController = new TextEditingController();
-  final TextEditingController _reenterPasswordController = new TextEditingController();
+  final TextEditingController _mailController = new TextEditingController(text: '854692552@qq.com');
+  final TextEditingController _passwordController = new TextEditingController(text: '123456Aa');
+  final TextEditingController _reenterPasswordController = new TextEditingController(text: '123456Aa');
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -120,7 +121,14 @@ class SigninState extends State<SigninController> {
                       } else if (_passwordController.text !=_reenterPasswordController.text) {
                         showToast("两次密码输入不正确");
                       } else {
-                        Navigator.pop(context, {'mail':_mailController.text, 'password':_passwordController.text});
+                        fetchSignin(_mailController.text, _passwordController.text).then((response) {
+                          if (response.errorCode == 0) {
+                            showToast('注册成功');
+                            Navigator.pop(context, {'mail':_mailController.text, 'password':_passwordController.text});
+                          } else {
+                            showToast(response.errorMsg);
+                          }
+                        });
                       }
                     },
                   ),

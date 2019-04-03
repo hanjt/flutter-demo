@@ -35,14 +35,18 @@ Future<DetailResponse> fetchBookDetail(String isbn) async {
  */
 Future<BaseResponse> fetchSignin(String mail, String password) async {
   var url = API.host+API.signin;
-  var body = {mail:mail ,password:password};
-  
+  var body = {'mail':mail ,'password':password};
+  print(url);
+  print(body);
   final response = await http.post(url, body:body);
 
   if (response.statusCode == 200) {
     return BaseResponse.fromJson(json.decode(response.body));
   } else {
-    throw Exception('Failed to load post');
+    return BaseResponse(
+      errorCode: -1,
+      errorMsg: response.reasonPhrase
+      );
   }
 }
 
