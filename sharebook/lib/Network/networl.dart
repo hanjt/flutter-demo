@@ -8,7 +8,7 @@ import '../Model/baseResponse.dart';
 import '../Model/loginResponse.dart';
 import '../Component/localCacher.dart';
 import '../Model/homeResponse.dart';
-import '../Model/enumeration.dart';
+
  Map<String,String> headers = {'content-type': 'application/x-www-form-urlencoded'};
 /**  
  * 
@@ -16,10 +16,22 @@ import '../Model/enumeration.dart';
  * 
 */
 Future<DetailResponse> fetchBookDetail(String isbn) async {
-  final response = await http.get(DoubanAPI.host+DoubanAPI.detail+isbn);
-
+  String username = '949384';
+  String password = 'e10adc3949ba59abbe56e057f20f883e';
+  String basicAuth =
+      'Basic ' + base64Encode(utf8.encode('$username:$password'));
+  final response = await http.get(ShaishufangAPI.host+ShaishufangAPI.detail+isbn, headers: {'authorization': basicAuth});
   if (response.statusCode == 200) {
-    return DetailResponse.fromJson(json.decode(response.body));
+    Map<String, dynamic> body = json.decode(response.body);
+    List books = body['result']['books'];
+    if (books.isEmpty) {
+      return DetailResponse(
+        errorCode: -1,
+        errorMsg: '没有查询到图书'
+      );
+    } else {
+      return DetailResponse.fromJson(body);
+    }
   } else {
     return DetailResponse(
         errorCode: -1,
@@ -98,11 +110,9 @@ Future<HomeListResponse> fetchBookList() async {
  * 
  */
 Future<BaseResponse> fetchAddBook(
-  String title, String author, String publisher,
-  String translator, String pubDate, String binding, String isbn, String image) async {
+  String title, String author, String publisher, String pubDate, String binding, String isbn, String image) async {
   var url = API.host+API.add;
-  var body = {'title':title, 'author':author, 'publisher':publisher,
-              'translator':translator, 'pub_date':pubDate, 'binding':binding, 
+  var body = {'title':title, 'author':author, 'publisher':publisher, 'pub_date':pubDate, 'binding':binding, 
               'isbn':isbn, 'image':image};
   var uid = await findUid();
   final response = await http.post(url,headers: {'uid':uid}, body:body);

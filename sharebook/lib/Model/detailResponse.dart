@@ -1,14 +1,37 @@
 // import 'enumeration.dart';
+import 'dart:convert';
 
 class DetailResponse {
   final int errorCode;
   final String errorMsg;
 
+  //图书
+  final List booksJson;
+  
+  DetailResponse({
+    this.errorCode,
+    this.errorMsg,
+    this.booksJson
+    });
+
+  DetailBookResponse book() {
+    return this.booksJson.map((m) => new DetailBookResponse.fromJson(m)).toList().first;
+  }
+
+  factory DetailResponse.fromJson(Map<String, dynamic> reponse) {
+      return DetailResponse(
+        booksJson: reponse['result']['books']
+      );
+    }
+}
+
+class DetailBookResponse {
+
   //作者
-  final List<dynamic> author;
+  final String author;
   
   //副标题
-  final String subTitle;
+  // final String subTitle;
 
   //出版日期
   final String pubDate;
@@ -22,20 +45,8 @@ class DetailResponse {
   //包装类型
   final String binding;
 
-  //翻译
-  final List<dynamic> translator;
-
-  //页数
-  final String pages;
-
-  //豆瓣链接
-  final String doubanURL;
-
   //出版社
   final String publisher;
-
-  //原作名
-  final String originTitle;
 
   //概述
   final String summary;
@@ -43,37 +54,26 @@ class DetailResponse {
   //售价
   final String price;
   
-  DetailResponse({
-    this.errorCode,
-    this.errorMsg,
+  DetailBookResponse({
     this.author, 
-    this.subTitle, 
     this.pubDate, 
     this.title, 
     this.imageURL,
     this.binding,
-    this.translator,
-    this.pages,
-    this.doubanURL,
     this.publisher,
-    this.originTitle,
     this.summary,
     this.price,
     });
-  factory DetailResponse.fromJson(Map<String, dynamic> json) {
-      return DetailResponse(
+  factory DetailBookResponse.fromJson(Map<String, dynamic> json) {
+    print(json);
+      return DetailBookResponse(
         author: json['author'],
-        subTitle: json['subtitle'],
-        pubDate: json['pubdate'],
-        title: json['title'],
-        imageURL: json['image'],
-        binding: json['binding'],
-        translator: json['translator'],
-        pages: json['pages'],
-        doubanURL: json['alt'],
-        publisher: json['publisher'],
-        originTitle: json['alt_title'],
-        summary: json['summary'],
+        pubDate: json['publictime'],
+        title: json['name'],
+        imageURL: json['img'],
+        binding: json['size'],
+        publisher: json['press'],
+        summary: json['desc'],
         price: json['price'],
       );
     }

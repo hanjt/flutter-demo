@@ -76,7 +76,7 @@ class HomeState extends State<HomeController> {
                                 context,
                                 MaterialPageRoute(builder: (context) => 
                                 DetailController(
-                                  barcode: list[index].isbn
+                                  barcode: '9787540488789'//list[index].isbn
                                 )),
                               );                 
                             },

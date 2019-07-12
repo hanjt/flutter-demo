@@ -3,7 +3,7 @@ import '../Model/detailResponse.dart';
 import 'toast.dart';
 
 class BookInformation extends StatelessWidget {
-  DetailResponse response;
+  DetailBookResponse response;
   final Future<DetailResponse> post;
   BookInformation({this.post});  
   @override
@@ -16,7 +16,7 @@ class BookInformation extends StatelessWidget {
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         if (snapshot.data.errorCode != -1) {
-                          response = snapshot.data;
+                          response = snapshot.data.book();
                           return new Column(
                           children: <Widget>[
                             Row (
@@ -26,7 +26,7 @@ class BookInformation extends StatelessWidget {
                                   child: Container(
                                     padding: EdgeInsets.all(20),
                                     child: Image.network(
-                                      snapshot.data.imageURL
+                                      response.imageURL
                                     ),
                                   ),
                                 ),
@@ -39,7 +39,7 @@ class BookInformation extends StatelessWidget {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: <Widget>[
                                         Text(
-                                          '书名：${snapshot.data.title}',
+                                          '书名：${response.title}',
                                           maxLines: 1,
                                           textAlign: TextAlign.left,
                                           style: new TextStyle(
@@ -49,31 +49,19 @@ class BookInformation extends StatelessWidget {
                                           ),
                                         ),
                                         Text(
-                                          '作者：${snapshot.data.author.join('，')}'
+                                          '作者：${response.author}'
                                         ),
                                         Text(
-                                          '出版社：${snapshot.data.publisher}'
+                                          '出版社：${response.publisher}'
                                         ),
                                         Text(
-                                          '副标题：${snapshot.data.subTitle}'
+                                          '出版年：${response.pubDate}'
                                         ),
                                         Text(
-                                          '原作名：${snapshot.data.originTitle}'
+                                          '定价：${response.price}'
                                         ),
                                         Text(
-                                          '译者：${snapshot.data.translator.join('，')}'
-                                        ),
-                                        Text(
-                                          '出版年：${snapshot.data.pubDate}'
-                                        ),
-                                        Text(
-                                          '页数：${snapshot.data.pages}'
-                                        ),
-                                        Text(
-                                          '定价：${snapshot.data.price}'
-                                        ),
-                                        Text(
-                                          '装帧：${snapshot.data.binding}'
+                                          '装帧：${response.binding}'
                                         ),
                                       ],
                                     ),
@@ -98,7 +86,7 @@ class BookInformation extends StatelessWidget {
                                           ),
                                   ),
                                   Text(
-                                    '${snapshot.data.summary}'
+                                    '${response.summary}'
                                   ),
                                 ],
                               )

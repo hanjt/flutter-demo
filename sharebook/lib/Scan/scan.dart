@@ -32,9 +32,9 @@ class _ScanState extends State<ScanController> {
         actions: <Widget>[
           FlatButton (
             onPressed: () {
-              DetailResponse response = information.response;
-              fetchAddBook(response.title, response.author.join('，'), 
-                           response.publisher, response.translator.join('，'), 
+              DetailBookResponse response = information.response;
+              fetchAddBook(response.title, response.author, 
+                           response.publisher, 
                            response.pubDate, response.binding,
                             _barcode, response.imageURL).then((response) {
                           if (response.errorCode == 0) {

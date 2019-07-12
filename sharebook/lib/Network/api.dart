@@ -1,9 +1,14 @@
 class DoubanAPI {
   //豆瓣的域名
-  static const host = 'https://api.douban.com';
-  static const detail = '/v2/book/isbn/';
+  static const host = 'https://book.douban.com';
+  static const detail = '/subject_search?search_text=';
 }
 
+class ShaishufangAPI {
+  //豆瓣的域名
+  static const host = 'https://shaishufang.com';
+  static const detail = '/index.php/api2/books/search?fmt=json&page_index=1&page_size=15&text=';
+}
 class API {
   static const host = 'http://139.199.39.133:3000';
 
