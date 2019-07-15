@@ -10,6 +10,7 @@ import '../Component/localCacher.dart';
 import '../Model/homeResponse.dart';
 
  Map<String,String> headers = {'content-type': 'application/x-www-form-urlencoded'};
+
 /**  
  * 
  * 获取图书详情
@@ -113,7 +114,28 @@ Future<BaseResponse> fetchAddBook(
   var body = {'title':title, 'author':author, 'publisher':publisher, 'pub_date':pubDate, 'binding':binding, 
               'isbn':isbn, 'image':image};
   var uid = await findUid();
-  final response = await http.post(url,headers: {'uid':uid}, body:body);
+  final response = await http.post(url, headers: {'uid':uid}, body:body);
+
+  if (response.statusCode == 200) {
+    return BaseResponse.fromJson(json.decode(response.body));
+  } else {
+    return BaseResponse(
+      errorCode: -1,
+      errorMsg: response.reasonPhrase
+      );
+  }
+}
+
+/** 
+ * 
+ * 更新阅读状态
+ * 
+ */
+Future<BaseResponse> fetchUpdateTypeStatus(String isbn) async {
+  var url = API.host+API.update;
+  var body = {'isbn':isbn};
+  var uid = await findUid();
+  final response = await http.post(url, headers: {'uid':uid}, body:body);
 
   if (response.statusCode == 200) {
     return BaseResponse.fromJson(json.decode(response.body));

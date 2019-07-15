@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../Component/cell.dart';
 import '../Detail/detail.dart';
 import '../Model/homeResponse.dart';
-import '../Model/enumeration.dart';
 import '../Scan/scan.dart';
 import '../Network/networl.dart';
 
@@ -76,7 +75,8 @@ class HomeState extends State<HomeController> {
                                 context,
                                 MaterialPageRoute(builder: (context) => 
                                 DetailController(
-                                  barcode: list[index].isbn
+                                  barcode: list[index].isbn,
+                                  readType: list[index].type,
                                 )),
                               );                 
                             },

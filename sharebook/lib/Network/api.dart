@@ -9,6 +9,7 @@ class ShaishufangAPI {
   static const host = 'https://shaishufang.com';
   static const detail = '/index.php/api2/books/search?fmt=json&page_index=1&page_size=15&text=';
 }
+
 class API {
   static const host = 'http://139.199.39.133:3000';
 
@@ -23,4 +24,7 @@ class API {
 
   //图书列表
   static const list = '/list';
+
+  //更新图书阅读状态
+  static const update = '/update';
 }

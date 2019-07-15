@@ -1,5 +1,3 @@
-import 'enumeration.dart';
-
 class HomeListResponse {
   final List originList;
   final int errorCode;
@@ -46,7 +44,7 @@ class HomeListResponse {
   final String isbn;
 
   //阅读状态
-  final ReadType type;
+  final bool type;
 
   HomeResponse({this.imageURL, this.title, this.author, this.publisher, this.pubDate, this.binding, this.isbn, this.type});
   factory HomeResponse.fromJson(Map<String, dynamic> json) {
@@ -58,7 +56,7 @@ class HomeListResponse {
         pubDate:    json['pub_date'],
         binding:    json['binding'],
         isbn:       json['isbn'],
-        type:       json['type'],
+        type:       json['read_type'],
       );
     }
   }

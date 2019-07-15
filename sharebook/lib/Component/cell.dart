@@ -6,6 +6,7 @@ class BookCell extends StatelessWidget {
   const BookCell({this.model});
   @override
   Widget build(BuildContext context) {
+    String _readText = this.model.type ? '已读': '未读';
     return new Container(
       child: Row(
         children: <Widget>[
@@ -53,7 +54,7 @@ class BookCell extends StatelessWidget {
           Expanded(
             flex: 1, // 10%
             child: Text(
-              '未读',
+              _readText
             ),
           )
         ],
