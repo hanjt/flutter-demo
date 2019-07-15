@@ -65,7 +65,6 @@ class DetailBookResponse {
     this.price,
     });
   factory DetailBookResponse.fromJson(Map<String, dynamic> json) {
-    print(json);
       return DetailBookResponse(
         author: json['author'],
         pubDate: json['publictime'],

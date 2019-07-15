@@ -36,9 +36,6 @@ class HomeListResponse {
   //出版社
   final String publisher;
 
-  //翻译者
-  final String translator;
-
   //出版年份
   final String pubDate;
 
@@ -51,14 +48,13 @@ class HomeListResponse {
   //阅读状态
   final ReadType type;
 
-  HomeResponse({this.imageURL, this.title, this.author, this.publisher, this.translator, this.pubDate, this.binding, this.isbn, this.type});
+  HomeResponse({this.imageURL, this.title, this.author, this.publisher, this.pubDate, this.binding, this.isbn, this.type});
   factory HomeResponse.fromJson(Map<String, dynamic> json) {
       return HomeResponse(
         imageURL:   json['image'],
         title:      json['title'],
         author:     json['author'],
         publisher:  json['publisher'],
-        translator: json['translator'],
         pubDate:    json['pub_date'],
         binding:    json['binding'],
         isbn:       json['isbn'],

@@ -39,7 +39,7 @@ class BookCell extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '${this.model.author}/${this.model.publisher}/${this.model.translator}译/${this.model.pubDate}出版/${this.model.binding}',
+                  '${this.model.author}/${this.model.publisher}/${this.model.pubDate}出版/${this.model.binding}',
                   maxLines: 2,
                   textAlign: TextAlign.left,
                   style: new TextStyle(

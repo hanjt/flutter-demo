@@ -40,7 +40,7 @@ class BookInformation extends StatelessWidget {
                                       children: <Widget>[
                                         Text(
                                           '书名：${response.title}',
-                                          maxLines: 1,
+                                          maxLines: 3,
                                           textAlign: TextAlign.left,
                                           style: new TextStyle(
                                                 fontSize: 14.0,
@@ -94,12 +94,12 @@ class BookInformation extends StatelessWidget {
                           ],
                         );
                         } else {
-                          // showToast(snapshot.data.errorMsg);
-                          return Text('${snapshot.data.errorMsg}');
+                          showToast('${snapshot.data.errorMsg}');
+                          return Text('');
                         }
                       } else if (snapshot.hasError) {
-                        // showToast(snapshot.error);
-                        return Text('${snapshot.error}');
+                        showToast('${snapshot.error}');
+                        return Text('');
                       } 
                       return Container(
                         color: Colors.green.withOpacity(0.3),
